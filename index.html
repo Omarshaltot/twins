@@ -4,560 +4,666 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة التسجيل - جامعة قناة السويس</title>
-    <style>
-        /* --- CSS Variables & Reset --- */
-        :root {
-            --primary: #0f172a;
-            /* Dark Navy */
-            --primary-light: #1e293b;
-            --accent: #d4af37;
-            /* Gold */
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --bg-body: #f8fafc;
-            --bg-card: #ffffff;
-            --border: #e2e8f0;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --radius: 16px;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            line-height: 1.5;
-        }
-
-        /* --- Layout & Container --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        /* --- Header --- */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            height: 70px;
-            display: flex;
-            align-items: center;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-text h1 {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .logo-text p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 5px;
-        }
-
-        nav button {
-            background: none;
-            border: none;
-            padding: 8px 16px;
-            font-size: 0.95rem;
-            cursor: pointer;
-            border-radius: 6px;
-            color: var(--text-muted);
-            transition: 0.2s;
-        }
-
-        nav button.active {
-            background-color: #f1f5f9;
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        nav button:hover {
-            color: var(--primary);
-        }
-
-        /* --- Main Content --- */
-        main {
-            padding: 2rem 0;
-        }
-
-        .section-title {
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        /* --- Grid System --- */
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-        }
-
-        /* --- Course Card --- */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            position: relative;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        }
-
-        .badge {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: linear-gradient(135deg, #fbbf24, #d97706);
-            color: white;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .card-code {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background-color: #e0f2fe;
-            color: #0369a1;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            width: fit-content;
-            margin-bottom: 12px;
-        }
-
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 8px;
-        }
-
-        .professor {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-        }
-
-        .description {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 16px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .meta-info {
-            margin-bottom: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* --- Card Footer --- */
-        .card-footer {
-            margin-top: auto;
-            /* Pushes footer to bottom */
-            border-top: 1px solid var(--border);
-            padding-top: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .credits {
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-        }
-
-        .credits strong {
-            font-size: 1.25rem;
-            color: var(--primary);
-        }
-
-        .credits span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: 0.2s;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-light);
-        }
-
-        .btn-disabled {
-            background-color: var(--border);
-            color: var(--text-muted);
-            cursor: not-allowed;
-        }
-
-        .btn-outline-danger {
-            background-color: transparent;
-            border: 1px solid var(--danger);
-            color: var(--danger);
-        }
-
-        .btn-outline-danger:hover {
-            background-color: #fef2f2;
-        }
-
-        /* --- Footer --- */
-        footer {
-            background-color: white;
-            border-top: 1px solid var(--border);
-            padding: 3rem 0;
-            margin-top: 4rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .footer-links li:hover {
-            color: var(--primary);
-        }
-
-        /* --- Icons (SVG) Helpers --- */
-        .icon {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-        }
-
-        .icon-lg {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* --- Responsive Mobile Nav --- */
-        @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                /* Hidden on mobile for simplicity in this demo */
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-        }
-    </style>
+    <title>بوابة تسجيل المواد - جامعة قناة السويس</title>
+    <meta name="description" content="نظام تسجيل المواد الدراسية لطلاب جامعة قناة السويس">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-    <header>
+    <!-- Header -->
+    <header class="header">
         <div class="container header-content">
-            <div class="logo-section">
+            <div class="logo">
                 <div class="logo-icon">
-                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                         <path d="M6 12v5c3 3 9 3 12 0v-5" />
                     </svg>
                 </div>
-                <div class="logo-text">
-                    <h1>بوابة التسجيل</h1>
-                    <p>جامعة قناة السويس</p>
+                <div>
+                    <h1 class="logo-title">بوابة التسجيل</h1>
+                    <p class="logo-subtitle">جامعة قناة السويس</p>
                 </div>
             </div>
-
-            <nav>
-                <ul>
-                    <li><button>الرئيسية</button></li>
-                    <li><button class="active">المواد المتاحة</button></li>
-                    <li><button>موادي المسجلة</button></li>
-                </ul>
+            <nav class="nav">
+                <a href="#home" class="nav-link active">الرئيسية</a>
+                <a href="#courses" class="nav-link">المواد</a>
+                <a href="#registered" class="nav-link">المسجلة</a>
             </nav>
         </div>
     </header>
 
-    <main class="container">
-        <h2 class="section-title">المقررات الدراسية المتاحة</h2>
-
-        <div class="courses-grid">
-
-            <div class="card">
-                <div class="badge">متطلب جامعة</div>
-                <div class="card-code">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <div class="hero-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span>التسجيل متاح الآن</span>
+            </div>
+            <h2 class="hero-title">مرحباً بك في بوابة<br><span class="highlight">تسجيل المواد</span></h2>
+            <p class="hero-description">سجل موادك الدراسية بكل سهولة وتابع جدولك الأكاديمي</p>
+            <div class="hero-buttons">
+                <a href="#courses" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
                     </svg>
-                    <span>CS101</span>
+                    تصفح المواد
+                </a>
+                <a href="#registered" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                        <line x1="16" x2="16" y1="2" y2="6" />
+                        <line x1="8" x2="8" y1="2" y2="6" />
+                        <line x1="3" x2="21" y1="10" y2="10" />
+                    </svg>
+                    المواد المسجلة
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">مادة متاحة</span>
                 </div>
-                <h3>مقدمة في البرمجة</h3>
-                <p class="professor">د. رشا محمد</p>
-                <p class="description">مقدمة شاملة في مفاهيم البرمجة وحل المشكلات باستخدام لغة جافا، مع التركيز على
-                    الأساسيات.</p>
-
-                <div class="meta-info">
-                    <div class="meta-item">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                        <span>الخميس، 09:00 ص - 11:00 ص</span>
-                    </div>
-                    <div class="meta-item">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                        <span>متبقي 12 مقعد</span>
-                    </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">20+</span>
+                    <span class="stat-label">قسم أكاديمي</span>
                 </div>
-
-                <div class="card-footer">
-                    <div class="credits">
-                        <strong>3</strong>
-                        <span>ساعات</span>
-                    </div>
-                    <button class="btn btn-primary">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <line x1="12" y1="5" x2="12" y2="19" />
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                        </svg>
-                        تسجيل
-                    </button>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">طالب مسجل</span>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="badge">تخصص دقيق</div>
-                <div class="card-code">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                    </svg>
-                    <span>AI202</span>
-                </div>
-                <h3>الذكاء الاصطناعي</h3>
-                <p class="professor">د. أحمد شريف</p>
-                <p class="description">دراسة الخوارزميات المتقدمة، التعلم الآلي، والشبكات العصبية وتطبيقاتها في الحياة
-                    العملية.</p>
-
-                <div class="meta-info">
-                    <div class="meta-item">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                        <span>الأحد، 12:00 م - 02:00 م</span>
-                    </div>
-                    <div class="meta-item" style="color: var(--danger);">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                        <span>مكتمل</span>
-                    </div>
-                </div>
-
-                <div class="card-footer">
-                    <div class="credits">
-                        <strong>3</strong>
-                        <span>ساعات</span>
-                    </div>
-                    <button class="btn btn-disabled" disabled>
-                        مكتمل
-                    </button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="badge">اختياري</div>
-                <div class="card-code">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                    </svg>
-                    <span>DB305</span>
-                </div>
-                <h3>قواعد البيانات</h3>
-                <p class="professor">د. سارة علي</p>
-                <p class="description">تصميم وإدارة قواعد البيانات العلاقية، لغة SQL، وتطبيقات قواعد البيانات الحديثة.
-                </p>
-
-                <div class="meta-info">
-                    <div class="meta-item">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                        <span>الثلاثاء، 10:00 ص - 12:00 م</span>
-                    </div>
-                    <div class="meta-item">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                        <span>متبقي 5 مقاعد</span>
-                    </div>
-                </div>
-
-                <div class="card-footer">
-                    <div class="credits">
-                        <strong>4</strong>
-                        <span>ساعات</span>
-                    </div>
-                    <button class="btn btn-outline-danger">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                        إلغاء التسجيل
-                    </button>
-                </div>
-            </div>
-
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <div class="container footer-grid">
-            <div>
-                <div class="logo-section" style="margin-bottom: 1rem;">
-                    <div class="logo-icon">
-                        <svg class="icon icon-lg" viewBox="0 0 24 24">
+    <!-- Courses Section -->
+    <section id="courses" class="courses-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">المواد المتاحة للتسجيل</h2>
+                <p class="section-description">اختر المواد التي ترغب في تسجيلها هذا الفصل</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="search-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input type="text" placeholder="ابحث عن مادة..." id="searchInput">
+                </div>
+                <div class="filter-buttons">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                    </svg>
+                    <button class="filter-btn active" data-category="all">الكل</button>
+                    <button class="filter-btn" data-category="برمجة">برمجة</button>
+                    <button class="filter-btn" data-category="شبكات">شبكات</button>
+                    <button class="filter-btn" data-category="رياضيات">رياضيات</button>
+                    <button class="filter-btn" data-category="قواعد بيانات">قواعد بيانات</button>
+                </div>
+            </div>
+
+            <!-- Courses Grid -->
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Course Card 1 -->
+                <div class="course-card" data-category="برمجة">
+                    <div class="card-header">
+                        <span class="category-badge">برمجة</span>
+                        <span class="course-code">CS101</span>
+                    </div>
+                    <h3 class="course-name">مقدمة في البرمجة</h3>
+                    <p class="professor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        د. أحمد محمد
+                    </p>
+                    <p class="course-description">تعلم أساسيات البرمجة باستخدام لغة Python</p>
+                    <div class="course-details">
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <span>الأحد - الثلاثاء 10:00 ص</span>
+                        </div>
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <span>25 مقعد متاح</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="credits">3 ساعات معتمدة</span>
+                        <button class="btn btn-register">تسجيل</button>
+                    </div>
+                </div>
+
+                <!-- Course Card 2 -->
+                <div class="course-card" data-category="شبكات">
+                    <div class="card-header">
+                        <span class="category-badge category-networks">شبكات</span>
+                        <span class="course-code">NET201</span>
+                    </div>
+                    <h3 class="course-name">أساسيات الشبكات</h3>
+                    <p class="professor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        د. سارة أحمد
+                    </p>
+                    <p class="course-description">مقدمة في شبكات الحاسوب وبروتوكولات الاتصال</p>
+                    <div class="course-details">
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <span>الاثنين - الأربعاء 12:00 م</span>
+                        </div>
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <span>30 مقعد متاح</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="credits">3 ساعات معتمدة</span>
+                        <button class="btn btn-register">تسجيل</button>
+                    </div>
+                </div>
+
+                <!-- Course Card 3 -->
+                <div class="course-card" data-category="رياضيات">
+                    <div class="card-header">
+                        <span class="category-badge category-math">رياضيات</span>
+                        <span class="course-code">MATH101</span>
+                    </div>
+                    <h3 class="course-name">التفاضل والتكامل</h3>
+                    <p class="professor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        د. محمد علي
+                    </p>
+                    <p class="course-description">أساسيات التفاضل والتكامل للمهندسين</p>
+                    <div class="course-details">
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <span>السبت - الثلاثاء 8:00 ص</span>
+                        </div>
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <span>40 مقعد متاح</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="credits">4 ساعات معتمدة</span>
+                        <button class="btn btn-register">تسجيل</button>
+                    </div>
+                </div>
+
+                <!-- Course Card 4 -->
+                <div class="course-card" data-category="قواعد بيانات">
+                    <div class="card-header">
+                        <span class="category-badge category-db">قواعد بيانات</span>
+                        <span class="course-code">DB301</span>
+                    </div>
+                    <h3 class="course-name">قواعد البيانات</h3>
+                    <p class="professor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        د. فاطمة حسن
+                    </p>
+                    <p class="course-description">تصميم وإدارة قواعد البيانات العلائقية</p>
+                    <div class="course-details">
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <span>الأحد - الخميس 2:00 م</span>
+                        </div>
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <span>20 مقعد متاح</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="credits">3 ساعات معتمدة</span>
+                        <button class="btn btn-register">تسجيل</button>
+                    </div>
+                </div>
+
+                <!-- Course Card 5 -->
+                <div class="course-card" data-category="برمجة">
+                    <div class="card-header">
+                        <span class="category-badge">برمجة</span>
+                        <span class="course-code">CS201</span>
+                    </div>
+                    <h3 class="course-name">هياكل البيانات</h3>
+                    <p class="professor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        د. أحمد محمد
+                    </p>
+                    <p class="course-description">دراسة هياكل البيانات والخوارزميات</p>
+                    <div class="course-details">
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <span>الاثنين - الأربعاء 10:00 ص</span>
+                        </div>
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <span>15 مقعد متاح</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="credits">3 ساعات معتمدة</span>
+                        <button class="btn btn-register">تسجيل</button>
+                    </div>
+                </div>
+
+                <!-- Course Card 6 -->
+                <div class="course-card" data-category="شبكات">
+                    <div class="card-header">
+                        <span class="category-badge category-networks">شبكات</span>
+                        <span class="course-code">NET301</span>
+                    </div>
+                    <h3 class="course-name">أمن الشبكات</h3>
+                    <p class="professor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        د. سارة أحمد
+                    </p>
+                    <p class="course-description">حماية الشبكات والأمن السيبراني</p>
+                    <div class="course-details">
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <span>السبت - الاثنين 4:00 م</span>
+                        </div>
+                        <div class="detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <span>18 مقعد متاح</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="credits">3 ساعات معتمدة</span>
+                        <button class="btn btn-register">تسجيل</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registered Courses Section -->
+    <section id="registered" class="registered-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">المواد المسجلة</h2>
+                <p class="section-description">قائمة المواد التي قمت بتسجيلها</p>
+            </div>
+
+            <div class="registered-summary">
+                <div class="summary-card">
+                    <div class="summary-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="summary-label">عدد المواد</p>
+                        <p class="summary-value" id="coursesCount">0</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                             <path d="M6 12v5c3 3 9 3 12 0v-5" />
                         </svg>
                     </div>
-                    <div class="logo-text">
-                        <h3>بوابة التسجيل</h3>
+                    <div>
+                        <p class="summary-label">إجمالي الساعات</p>
+                        <p class="summary-value" id="totalCredits">0</p>
                     </div>
                 </div>
-                <p style="font-size: 0.9rem; color: var(--text-muted);">
-                    نظام تسجيل المواد الدراسية الإلكتروني يوفر لك تجربة سهلة وسريعة لإدارة جدولك الدراسي.
-                </p>
             </div>
 
-            <div class="footer-links">
-                <h4>روابط سريعة</h4>
-                <ul>
-                    <li>الرئيسية</li>
-                    <li>المواد المتاحة</li>
-                    <li>الجدول الدراسي</li>
-                    <li>الأسئلة الشائعة</li>
-                </ul>
-            </div>
-
-            <div class="footer-links">
-                <h4>تواصل معنا</h4>
-                <ul>
-                    <li>info@suez.edu.eg</li>
-                    <li>01068340198</li>
-                    <li>الإسماعيلية، مصر</li>
-                </ul>
+            <div class="registered-list" id="registeredList">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                        </svg>
+                    </div>
+                    <h3>لم تقم بتسجيل أي مواد بعد</h3>
+                    <p>تصفح المواد المتاحة وابدأ التسجيل</p>
+                    <a href="#courses" class="btn btn-primary">تصفح المواد</a>
+                </div>
             </div>
         </div>
-        <div class="container"
-            style="text-align: center; margin-top: 3rem; color: var(--text-muted); font-size: 0.8rem;">
-            ©️ 2025 جامعة قناة السويس. جميع الحقوق محفوظة.
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>بوابة التسجيل</h3>
+                            <p>جامعة قناة السويس</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">نظام إلكتروني متكامل لتسجيل المواد الدراسية وإدارة الجدول الأكاديمي
+                        للطلاب</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#courses">المواد المتاحة</a></li>
+                        <li><a href="#registered">المواد المسجلة</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h4>تواصل معنا</h4>
+                    <ul>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect width="20" height="16" x="2" y="4" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
+                            <span>info@scuegypt.edu.eg</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <span>01068340198</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <span>جمهورية مصر العربية</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>©️ 2024 جامعة قناة السويس. جميع الحقوق محفوظة.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <script>
+        // Registration functionality
+        let registeredCourses = [];
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
+
+        // Update registered courses display
+        function updateRegisteredDisplay() {
+            const list = document.getElementById('registeredList');
+            const countEl = document.getElementById('coursesCount');
+            const creditsEl = document.getElementById('totalCredits');
+
+            countEl.textContent = registeredCourses.length;
+
+            let totalCredits = 0;
+            registeredCourses.forEach(course => {
+                totalCredits += course.credits;
+            });
+            creditsEl.textContent = totalCredits;
+
+            if (registeredCourses.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                            </svg>
+                        </div>
+                        <h3>لم تقم بتسجيل أي مواد بعد</h3>
+                        <p>تصفح المواد المتاحة وابدأ التسجيل</p>
+                        <a href="#courses" class="btn btn-primary">تصفح المواد</a>
+                    </div>
+                `;
+            } else {
+                list.innerHTML = registeredCourses.map(course => `
+                    <div class="registered-card">
+                        <div class="registered-info">
+                            <span class="category-badge">${course.category}</span>
+                            <h4>${course.name}</h4>
+                            <p>${course.code} • ${course.credits} ساعات معتمدة</p>
+                        </div>
+                        <button class="btn btn-unregister" onclick="unregisterCourse('${course.code}')">
+                            إلغاء التسجيل
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Register course
+        function registerCourse(button) {
+            const card = button.closest('.course-card');
+            const name = card.querySelector('.course-name').textContent;
+            const code = card.querySelector('.course-code').textContent;
+            const category = card.querySelector('.category-badge').textContent;
+            const creditsText = card.querySelector('.credits').textContent;
+            const credits = parseInt(creditsText);
+
+            if (registeredCourses.find(c => c.code === code)) {
+                showToast('هذه المادة مسجلة بالفعل', 'error');
+                return;
+            }
+
+            registeredCourses.push({ name, code, category, credits });
+            button.textContent = 'مسجل ✓';
+            button.classList.add('registered');
+            button.disabled = true;
+            updateRegisteredDisplay();
+            showToast('تم تسجيل المادة بنجاح');
+        }
+
+        // Unregister course
+        function unregisterCourse(code) {
+            registeredCourses = registeredCourses.filter(c => c.code !== code);
+
+            // Reset button in courses grid
+            document.querySelectorAll('.course-card').forEach(card => {
+                if (card.querySelector('.course-code').textContent === code) {
+                    const btn = card.querySelector('.btn-register');
+                    btn.textContent = 'تسجيل';
+                    btn.classList.remove('registered');
+                    btn.disabled = false;
+                }
+            });
+
+            updateRegisteredDisplay();
+            showToast('تم إلغاء تسجيل المادة');
+        }
+
+        // Filter courses
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const category = this.dataset.category;
+                document.querySelectorAll('.course-card').forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search courses
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll('.course-card').forEach(card => {
+                const name = card.querySelector('.course-name').textContent.toLowerCase();
+                const code = card.querySelector('.course-code').textContent.toLowerCase();
+                const professor = card.querySelector('.professor').textContent.toLowerCase();
+
+                if (name.includes(searchTerm) || code.includes(searchTerm) || professor.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Register button click handlers
+        document.querySelectorAll('.btn-register').forEach(btn => {
+            btn.addEventListener('click', function () {
+                registerCourse(this);
+            });
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
